@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网站图标设置教程 - humensmoc</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/images/favicon/site.webmanifest">
+    <link rel="shortcut icon" href="/images/favicon/favicon.ico">
+    <style>
+        .tutorial-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            line-height: 1.8;
+        }
+        .step-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: #222;
+            color: white;
+            text-align: center;
+            line-height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .code-block {
+            background: #f1f1f1;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: monospace;
+            margin: 15px 0;
+        }
+        .note-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-buttons" style="padding: 20px;">
+        <a href="/newblog.html" class="nav-button">
+            <i class="fa fa-arrow-left"></i> 返回博客
+        </a>
+        <a href="/" class="nav-button">
+            <i class="fa fa-home"></i> 返回主页
+        </a>
+    </div>
+    
+    <div class="tutorial-container">
+        <h1>如何设置网站图标（Favicon）</h1>
+        
+        <div class="step-section">
+            <h2><span class="step-number">1</span>准备图标文件</h2>
+            <p>首先需要准备以下尺寸的图标文件：</p>
+            <ul>
+                <li>favicon.ico (16x16 或 32x32 像素)</li>
+                <li>favicon-16x16.png (16x16 像素)</li>
+                <li>favicon-32x32.png (32x32 像素)</li>
+                <li>apple-touch-icon.png (180x180 像素，用于 iOS 设备)</li>
+                <li>android-chrome-192x192.png (192x192 像素)</li>
+                <li>android-chrome-512x512.png (512x512 像素)</li>
+            </ul>
+            
+            <div class="note-box">
+                <strong>提示：</strong> 可以使用 <a href="https://realfavicongenerator.net/" target="_blank">Real Favicon Generator</a> 
+                在线工具生成所有需要的图标文件。只需上传一个高质量的原始图像（建议至少 512x512 像素），工具会自动生成所有所需尺寸。
+            </div>
+        </div>
+
+        <div class="step-section">
+            <h2><span class="step-number">2</span>创建文件结构</h2>
+            <p>将生成的图标文件放在网站的 <code>/images/favicon/</code> 目录下：</p>
+            <pre class="code-block">
+/images/favicon/
+    ├── favicon.ico
+    ├── favicon-16x16.png
+    ├── favicon-32x32.png
+    ├── apple-touch-icon.png
+    ├── android-chrome-192x192.png
+    ├── android-chrome-512x512.png
+    └── site.webmanifest</pre>
+        </div>
+
+        <div class="step-section">
+            <h2><span class="step-number">3</span>创建 Manifest 文件</h2>
+            <p>在 <code>/images/favicon/</code> 目录下创建 <code>site.webmanifest</code> 文件：</p>
+            <pre class="code-block">{
+    "name": "网站名称",
+    "short_name": "短名称",
+    "icons": [
+        {
+            "src": "/images/favicon/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/favicon/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff",
+    "display": "standalone"
+}</pre>
+        </div>
+
+        <div class="step-section">
+            <h2><span class="step-number">4</span>添加 HTML 代码</h2>
+            <p>在所有页面的 <code>&lt;head&gt;</code> 标签中添加以下代码：</p>
+            <pre class="code-block">&lt;link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png"&gt;
+&lt;link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png"&gt;
+&lt;link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png"&gt;
+&lt;link rel="manifest" href="/images/favicon/site.webmanifest"&gt;
+&lt;link rel="shortcut icon" href="/images/favicon/favicon.ico"&gt;</pre>
+        </div>
+
+        <div class="step-section">
+            <h2>注意事项</h2>
+            <ul>
+                <li>确保所有图标文件的路径正确</li>
+                <li>图标文件应该清晰可辨，即使在小尺寸下也能识别</li>
+                <li>建议使用 PNG 格式以保持最佳质量</li>
+                <li>记得在所有页面都添加相关代码</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html> 
