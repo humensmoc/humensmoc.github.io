@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unity WebGL游戏上传教程 - humensmoc</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+    <style>
+        .tutorial-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            line-height: 1.8;
+        }
+        .step-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: #222;
+            color: white;
+            text-align: center;
+            line-height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .note-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .image-guide {
+            max-width: 100%;
+            border-radius: 5px;
+            margin: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        code {
+            background: #f1f1f1;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-buttons" style="padding: 20px;">
+        <a href="/games.html" class="nav-button">
+            <i class="fa fa-arrow-left"></i> 返回游戏页面
+        </a>
+        <a href="/" class="nav-button">
+            <i class="fa fa-home"></i> 返回主页
+        </a>
+    </div>
+    <div class="tutorial-container">
+        <h1>如何将Unity游戏部署到个人网站</h1>
+        
+        <div class="step-section">
+            <h2><span class="step-number">1</span>Unity WebGL导出设置</h2>
+            <p>首先需要在Unity中正确配置并导出WebGL包。这一步对于游戏能否正常运行至关重要。</p>
+            
+            <h3>关键设置：</h3>
+            <ul>
+                <li>打开 Build Settings (File > Build Settings)</li>
+                <li>切换平台到 WebGL (如果没有安装，需要通过Unity Hub安装WebGL模块)</li>
+                <li>点击 Player Settings，在 Publishing Settings 中：
+                    <ul>
+                        <li>建议关闭 Compression Format（设置为 Disabled）</li>
+                        <li>这样可以避免可能的兼容性问题</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="video-container">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/2jjESP58jsA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+
+            <div class="note-box">
+                <strong>提示：</strong> 导出时间可能较长，这是正常的。导出后的文件夹会包含多个文件，我们需要它们所有。
+            </div>
+        </div>
+
+        <div class="step-section">
+            <h2><span class="step-number">2</span>上传到Simmer.io</h2>
+            <p>我们选择Simmer.io而不是Itch.io的原因是Simmer提供了更好的网页嵌入支持。</p>
+            
+            <h3>上传步骤：</h3>
+            <ol>
+                <li>访问 <a href="https://simmer.io" target="_blank">Simmer.io</a> 并注册账号</li>
+                <li>点击 "Upload" 上传你的WebGL构建文件</li>
+                <li>上传完成后，进入 "My Uploads"</li>
+                <li>找到你的游戏项目并点击</li>
+                <li>在游戏页面右上角点击 "Edit"</li>
+                <li>找到并复制 Embed 代码</li>
+            </ol>
+
+            <div class="note-box">
+                <strong>为什么不用Itch.io？</strong> Itch.io的嵌入功能只提供跳转链接，无法直接在网页中播放游戏。而Simmer.io允许游戏直接在网页中运行，提供更好的用户体验。
+            </div>
+        </div>
+
+        <div class="step-section">
+            <h2><span class="step-number">3</span>部署到个人网站</h2>
+            <p>获得嵌入代码后，你可以将其添加到你的网页中。示例代码如下：</p>
+
+            <pre><code>&lt;iframe src="https://i.simmer.io/@username/game-name" 
+    style="width:960px;height:600px"&gt;&lt;/iframe&gt;</code></pre>
+
+            <div class="note-box">
+                <strong>建议：</strong> 
+                <ul>
+                    <li>可以调整iframe的宽度和高度以适应你的网页布局</li>
+                    <li>考虑添加响应式设计使游戏在移动设备上也能正常显示</li>
+                    <li>确保你的网页有足够的空间容纳游戏窗口</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="step-section">
+            <h2>常见问题解答</h2>
+            <ul>
+                <li><strong>游戏加载很慢怎么办？</strong><br>
+                    这可能与WebGL文件大小有关。建议优化游戏资源，减小构建包体积。</li>
+                <li><strong>游戏无法在某些浏览器中运行？</strong><br>
+                    确保使用现代浏览器，并检查是否启用了WebGL支持。</li>
+                <li><strong>如何处理移动端适配？</strong><br>
+                    可以通过CSS媒体查询调整iframe大小，或添加缩放控制。</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html> 

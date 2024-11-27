@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博客 - humensmoc</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+    <style>
+        .blog-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .blog-post {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            padding: 20px;
+            transition: transform 0.3s;
+        }
+        .blog-post:hover {
+            transform: translateY(-5px);
+        }
+        .post-title {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .post-meta {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+        .post-preview {
+            color: #444;
+            line-height: 1.6;
+        }
+        .read-more {
+            display: inline-block;
+            padding: 8px 20px;
+            background-color: #222;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+        .read-more:hover {
+            background-color: #444;
+        }
+        .tag {
+            display: inline-block;
+            padding: 3px 8px;
+            background: #f0f0f0;
+            border-radius: 3px;
+            font-size: 0.8em;
+            color: #666;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-buttons" style="padding: 20px;">
+        <a href="/" class="nav-button">
+            <i class="fa fa-home"></i> 返回主页
+        </a>
+    </div>
+    
+    <div class="blog-container">
+        <h1>博客文章</h1>
+        
+        <div class="blog-post">
+            <h2 class="post-title">Unity WebGL游戏上传教程</h2>
+            <div class="post-meta">
+                <i class="fa fa-calendar"></i> 2024-01-01
+                <span class="tag"><i class="fa fa-tag"></i> 教程</span>
+                <span class="tag"><i class="fa fa-gamepad"></i> Unity</span>
+            </div>
+            <div class="post-preview">
+                详细介绍如何将Unity游戏导出为WebGL格式并部署到个人网站，包括Unity导出设置、Simmer.io上传流程等内容...
+            </div>
+            <a href="/games/upload-tutorial.html" class="read-more">
+                阅读全文 <i class="fa fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <!-- 可以在这里添加更多博客文章 -->
+    </div>
+</body>
+</html> 
