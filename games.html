@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游戏 - humensmoc</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+    <style>
+        .games-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .game-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        .game-card:hover {
+            transform: translateY(-5px);
+        }
+        .game-preview {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .game-info {
+            padding: 20px;
+        }
+        .game-title {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        .game-description {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        .play-button {
+            display: inline-block;
+            padding: 8px 20px;
+            background-color: #222;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .play-button:hover {
+            background-color: #444;
+        }
+    </style>
+</head>
+<body>
+    <div class="games-container">
+        <h1>游戏</h1>
+        <div class="game-grid">
+            <div class="game-card">
+                <img src="/images/upload-test-preview.png" alt="Upload Test Preview" class="game-preview">
+                <div class="game-info">
+                    <h2 class="game-title">Upload Test</h2>
+                    <p class="game-description">测试游戏展示</p>
+                    <a href="/games/upload-test.html" class="play-button">
+                        <i class="fa fa-play"></i> 开始游戏
+                    </a>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <img src="/images/game-placeholder-1.png" alt="示例游戏1" class="game-preview">
+                <div class="game-info">
+                    <h2 class="game-title">冒险游戏示例</h2>
+                    <p class="game-description">这是一个虚构的冒险游戏，展示卡片布局效果。探索神秘世界，解开谜题。</p>
+                    <a href="#" class="play-button">
+                        <i class="fa fa-play"></i> 即将推出
+                    </a>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <img src="/images/game-placeholder-2.png" alt="示例游戏2" class="game-preview">
+                <div class="game-info">
+                    <h2 class="game-title">解谜游戏示例</h2>
+                    <p class="game-description">一个富有创意的解谜游戏展示。通过独特的机制，体验不同的游戏玩法。</p>
+                    <a href="#" class="play-button">
+                        <i class="fa fa-play"></i> 开发中
+                    </a>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <img src="/images/game-placeholder-3.png" alt="示例游戏3" class="game-preview">
+                <div class="game-info">
+                    <h2 class="game-title">叙事游戏示例</h2>
+                    <p class="game-description">一个关于故事和选择的游戏。每个决定都会影响故事的走向。</p>
+                    <a href="#" class="play-button">
+                        <i class="fa fa-play"></i> 规划中
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
