@@ -1,519 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.3.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
-  </script>
-
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Untitled">
-<meta property="og:url" content="http://example.com/index.html">
-<meta property="og:site_name" content="Untitled">
-<meta property="og:locale" content="en_US">
-<meta property="article:author" content="李泊凡">
-<meta name="twitter:card" content="summary">
-
-<link rel="canonical" href="http://example.com/">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : true,
-    isPost : false,
-    lang   : 'en'
-  };
-</script>
-
-  <title>Untitled</title>
-  
-
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>李泊凡的个人网站</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+    <style>
+        .home-container {
+            text-align: center;
+            padding: 50px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .profile-section {
+            margin-bottom: 40px;
+        }
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .nav-button {
+            padding: 10px 20px;
+            background-color: #222;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .nav-button:hover {
+            background-color: #444;
+        }
+    </style>
 </head>
-
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
-
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Untitled</h1>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
-    </div>
-  </div>
-</div>
-
-
-
-
-<nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
-
-  </li>
-  </ul>
-</nav>
-
-
-
-
-</div>
-    </header>
-
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content index posts-expand">
-            
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/22/%E5%93%88%E8%BF%AA%E6%96%AF%E6%B8%B8%E6%88%8F%E6%8B%86%E8%A7%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="李泊凡">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Untitled">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/03/22/%E5%93%88%E8%BF%AA%E6%96%AF%E6%B8%B8%E6%88%8F%E6%8B%86%E8%A7%A3/" class="post-title-link" itemprop="url">【游戏拆解】哈迪斯</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2023-03-22 00:00:00 / Modified: 04:28:37" itemprop="dateCreated datePublished" datetime="2023-03-22T00:00:00+08:00">2023-03-22</time>
-            </span>
-
-          
-
+<body>
+    <div class="home-container">
+        <div class="profile-section">
+            <img src="/images/avatar.jpg" alt="头像" class="profile-image">
+            <h1>李泊凡</h1>
+            <p>欢迎来到我的个人网站</p>
         </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="↓-游戏元素拆解思维导图"><a href="#↓-游戏元素拆解思维导图" class="headerlink" title="↓ 游戏元素拆解思维导图"></a><em>↓ 游戏元素拆解思维导图</em></h1>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/03/22/%E5%93%88%E8%BF%AA%E6%96%AF%E6%B8%B8%E6%88%8F%E6%8B%86%E8%A7%A3/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/18/Persuasive%20Games/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="李泊凡">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Untitled">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/12/18/Persuasive%20Games/" class="post-title-link" itemprop="url">（译）Persuasive Games Chapter 3 Ideological Frames</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-12-18 23:00:00" itemprop="dateCreated datePublished" datetime="2022-12-18T23:00:00+08:00">2022-12-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-03-18 22:48:41" itemprop="dateModified" datetime="2023-03-18T22:48:41+08:00">2023-03-18</time>
-              </span>
-
-          
-
+        <div class="about-section">
+            <h2>关于我</h2>
+            <p>这里是一段个人简介...</p>
         </div>
-      </header>
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Persuasive-Game"><a href="#Persuasive-Game" class="headerlink" title="Persuasive Game"></a><em>Persuasive Game</em></h1><p>原作者：Ian Bogost，美国游戏学者、游戏设计师。</p>
-<h2 id="Chapter-3-Ideological-Frames-意识形态框架"><a href="#Chapter-3-Ideological-Frames-意识形态框架" class="headerlink" title="Chapter 3 Ideological Frames 意识形态框架"></a>Chapter 3 Ideological Frames 意识形态框架</h2><p>The 2004 U.S. presidential election renewed world citizens’ recognition of an ideological polarization in U.S. politics. The American Electoral College and an absent viable third party only amplified the apparent split: massive, telecast U.S. maps displaying won states in red (Republican) and blue (Democrat) suggested a geographic divide to many Americans, with the west coast, northeast, and Great Lakes voting Democratic and the heartland and south voting Republican. Yet more detailed maps that showed county-by-county vote balance proved that the division runs even deeper, with most counties appearing some shade of purple, a combination of “red votes” and “blue votes.”1 In the aftermath of the election, Democrats have acknowledged that their messages have failed, just as Republicans have recognized how muchtheirs have succeeded. Juxtaposing American morality against British class rifts, some cite religion as the key issue dividing the presidential vote.2 Meanwhile, the Left has scrambled to develop a new strategy. Ideas are plentiful: avoid candidates from the northeast;3 focus more strongly on domestic issues;4 seek better management.5 But two influential political theoristshave suggested that such superficial strategies will not move the political needle; instead, political success draws less from reality and more from representation.</p>
-<p>2004 年美国总统大选让世界公民重新认识到美国政治中的意识形态两极分化。美国选举团以及缺席的可行第三方政党只会放大已然明显的分裂：用红色（共和党）和蓝色（民主党）标注的巨大美国地图显示了许多美国人的地理鸿沟，西海岸、东北部和大湖区投票给民主党，腹地和南部投票给共和党。然而，显示各县选票平衡的更详细的地图证明，这种分歧甚至更深，大多数县出现了一些紫色阴影，这是“红色选票”和“蓝色选票”的组合。1 在选举之后, 民主党人得知了他们的失败，正如共和党人已经认识到他们取得了多大的成功一样。将美国道德与英国阶级分裂并列看待，一些人认为宗教是总统选举的关键。2 与此同时，左派争先恐后地制定新战略。他们的想法很多：避免来自东北的候选人；3 更加关注国内问题；4 寻求更好的管理。5 但两位有影响力的政治理论家表示，这种肤浅的策略不会动摇政局；相反，政治的成功很少来自现实，而更多来自代表性。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/12/18/Persuasive%20Games/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/20/%E9%98%BF%E6%AF%94%E7%9A%84%E4%BF%A1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="李泊凡">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Untitled">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/10/20/%E9%98%BF%E6%AF%94%E7%9A%84%E4%BF%A1/" class="post-title-link" itemprop="url">（译）阿比察邦的信</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-10-20 12:37:53" itemprop="dateCreated datePublished" datetime="2022-10-20T12:37:53+08:00">2022-10-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-03-18 21:54:22" itemprop="dateModified" datetime="2023-03-18T21:54:22+08:00">2023-03-18</time>
-              </span>
-
-          
-
+        <div class="nav-buttons">
+            <a href="/blog.html" class="nav-button">
+                <i class="fa fa-blog"></i> 博客
+            </a>
+            <a href="/archives/" class="nav-button">
+                <i class="fa fa-archive"></i> 归档
+            </a>
         </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="生活的标识：疫情期间来自阿彼察邦的一封信"><a href="#生活的标识：疫情期间来自阿彼察邦的一封信" class="headerlink" title="生活的标识：疫情期间来自阿彼察邦的一封信"></a>生活的标识：疫情期间来自阿彼察邦的一封信</h2><p>原作者：阿彼察邦·维拉斯哈古，泰国导演独立电影人，代表作品《记忆》（2021）、《能召回前世的布米叔叔》（2010）、《热带疾病》（2004）.</p>
-<p>上周，在北京隔离的贾樟柯给我们寄来了一封信。一周以后，阿彼察邦·维拉斯哈古读过这封信，在清迈，他的家里，也为我们寄来一封信。</p>
-<p>阿彼察邦·维拉斯哈古写自阿姆斯特丹之眼</p>
-<p>贾樟柯的话让我很有感触，他让我再一次感受到，隔离之下，人与人之间的密切关系有多麽重要。同样，我也想像贾一样，分享些近期产生的想法。</p>
-<p>今天早上我一直在想这样一个词，“journey（旅行）”，以及，我们与其有着怎样的联系。小的时候，在旅途中我们总是不知疲倦地重复：“我们到了吗？”“我们什么时候才会到啊？”；可大些时，我们渐渐关注起沿途的景物，会去看路边的树木，房子，信号牌，来往的车辆——那些我们曾经无暇顾及的东西。我们会渐渐懂得对于旅行，应该冷静对待。因为我们比以往更知道，旅途的尽头会有一个目的地，那是这些景物的终点。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/10/20/%E9%98%BF%E6%AF%94%E7%9A%84%E4%BF%A1/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
-  
-
-
-
-          </div>
-          
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">李泊凡</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">3</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">2</span>
-        <span class="site-state-item-name">tags</span>
-      </div>
-  </nav>
-</div>
-
-
-
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
-
-<div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2023</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">李泊凡</span>
-</div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
-  </div>
-
-        
-
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/muse.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-
 </body>
 </html>
