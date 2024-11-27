@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML元编程效果教程 - humensmoc</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/images/favicon/site.webmanifest">
+    <link rel="shortcut icon" href="/images/favicon/favicon.ico">
+    <style>
+        .tutorial-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            line-height: 1.8;
+        }
+        .meta-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .code-block {
+            background: #f1f1f1;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: monospace;
+            margin: 15px 0;
+        }
+        .demo-box {
+            border: 2px dashed #666;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            background: #fff;
+        }
+        .meta-title {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+        .note-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .meta-effect {
+            font-family: monospace;
+            color: #666;
+        }
+        .glitch-text {
+            position: relative;
+            animation: glitch 1s infinite;
+        }
+        @keyframes glitch {
+            0% { transform: none; opacity: 1; }
+            7% { transform: skew(-0.5deg, -0.9deg); opacity: 0.75; }
+            10% { transform: none; opacity: 1; }
+            27% { transform: none; opacity: 1; }
+            30% { transform: skew(0.8deg, -0.1deg); opacity: 0.75; }
+            35% { transform: none; opacity: 1; }
+            52% { transform: none; opacity: 1; }
+            55% { transform: skew(-1deg, 0.2deg); opacity: 0.75; }
+            50% { transform: none; opacity: 1; }
+            72% { transform: none; opacity: 1; }
+            75% { transform: skew(0.4deg, 1deg); opacity: 0.75; }
+            80% { transform: none; opacity: 1; }
+            100% { transform: none; opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-buttons" style="padding: 20px;">
+        <a href="/newblog.html" class="nav-button">
+            <i class="fa fa-arrow-left"></i> 返回博客
+        </a>
+        <a href="/" class="nav-button">
+            <i class="fa fa-home"></i> 返回主页
+        </a>
+    </div>
+    
+    <div class="tutorial-container">
+        <h1 class="glitch-text">HTML元编程效果教程</h1>
+        
+        <div class="meta-section">
+            <h2 class="meta-title">1. 显示HTML标签</h2>
+            <p>要在页面中显示HTML标签，我们需要将特殊字符转换为HTML实体：</p>
+            <div class="code-block">
+                &lt; 转换为 &amp;lt;<br>
+                &gt; 转换为 &amp;gt;<br>
+                &amp; 转换为 &amp;amp;
+            </div>
+            
+            <div class="demo-box">
+                <p>示例效果：</p>
+                <p>&lt;h1&gt;这是一个标题&lt;/h1&gt;</p>
+                <p>&lt;p&gt;这是一个段落&lt;/p&gt;</p>
+            </div>
+        </div>
+
+        <div class="meta-section">
+            <h2 class="meta-title">2. 创建元标签效果</h2>
+            <p>我们可以使用CSS和HTML创建一些有趣的元编程效果：</p>
+            
+            <div class="demo-box">
+                <p class="meta-effect">&lt;正在加载页面...&gt;</p>
+                <p class="meta-effect">&lt;检测到用户输入&gt;</p>
+                <p class="meta-effect">&lt;渲染DOM树&gt;</p>
+            </div>
+
+            <div class="code-block">
+.meta-effect {
+    font-family: monospace;
+    color: #666;
+}
+            </div>
+        </div>
+
+        <div class="meta-section">
+            <h2 class="meta-title">3. 故障效果文本</h2>
+            <p>使用CSS动画创建故障效果：</p>
+            
+            <div class="demo-box">
+                <p class="glitch-text">这是一段故障效果文本</p>
+            </div>
+
+            <div class="code-block">
+.glitch-text {
+    position: relative;
+    animation: glitch 1s infinite;
+}
+
+@keyframes glitch {
+    0% { transform: none; }
+    7% { transform: skew(-0.5deg, -0.9deg); }
+    10% { transform: none; }
+    /* ... 更多关键帧 ... */
+}
+            </div>
+        </div>
+
+        <div class="meta-section">
+            <h2 class="meta-title">4. 代码注释效果</h2>
+            <div class="demo-box">
+                <p class="meta-effect">/* 这是一段模拟的代码注释 */</p>
+                <p class="meta-effect">// 这是一行单行注释</p>
+                <p class="meta-effect">&lt;!-- 这是HTML注释 --&gt;</p>
+            </div>
+        </div>
+
+        <div class="meta-section">
+            <h2 class="meta-title">5. 实用技巧</h2>
+            <div class="note-box">
+                <ul>
+                    <li>使用 <code>pre</code> 标签保留代码格式</li>
+                    <li>使用等宽字体提升代码可读性</li>
+                    <li>添加适当的空格和缩进</li>
+                    <li>使用CSS美化代码显示效果</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
