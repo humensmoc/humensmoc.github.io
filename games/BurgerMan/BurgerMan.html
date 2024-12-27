@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BurgerMan</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="game-container">
+        <div id="startScreen">
+            <div class="controls-guide">
+                WASD to move
+                <div class="keys-display">
+                    <div class="key">W</div>
+                    <div class="key-row">
+                        <div class="key">A</div>
+                        <div class="key">S</div>
+                        <div class="key">D</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="game-content" style="display: none;">
+            <div id="messageDisplay" class="message-display"></div>
+            <div id="letterGuide" class="letter-guide"></div>
+        </div>
+        <canvas id="gameCanvas"></canvas>
+        <div class="button-container">
+            <div id="startButton" class="game-button">
+                <span>S</span><span>T</span><span>A</span><span>R</span><span>T</span>
+                <span class="space"></span>
+                <span>G</span><span>A</span><span>M</span><span>E</span>
+            </div>
+            <div id="buildButton" class="game-button" style="display: none;">
+                <span>B</span><span>U</span><span>I</span><span>L</span><span>D</span>
+                <span class="space"></span>
+                <span>G</span><span>A</span><span>M</span><span>E</span>
+            </div>
+        </div>
+        <div id="customMessageModal" class="modal">
+            <div class="modal-content">
+                <h2>Congratulations！</h2>
+                <p>Build your own version：</p>
+                <input type="text" id="customMessage" placeholder="Input what you want to say！" maxlength="30">
+                <div class="modal-buttons">
+                    <button id="createCustomGame">Create</button>
+                    <button id="closeModal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html> 

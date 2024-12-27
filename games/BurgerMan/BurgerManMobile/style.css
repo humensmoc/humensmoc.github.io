@@ -1,0 +1,452 @@
+@font-face {
+    font-family: 'QuinqueFive';
+    src: url('assets/fonts/QuinqueFive.woff') format('woff');
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+    overflow-x: hidden;
+    position: relative;
+}
+
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    font-family: 'QuinqueFive', monospace;
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: 0;
+}
+
+.controls-guide {
+    margin-top: 20px;
+    text-align: center;
+    color: #000000;
+    font-size: 18px;
+}
+
+.keys-display {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.key-row {
+    display: flex;
+    gap: 5px;
+}
+
+.key {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 2px solid #000000;
+    padding: 8px 12px;
+    border-radius: 5px;
+    margin: 3px;
+    font-weight: bold;
+}
+
+.game-content {
+    display: none;
+    width: 95vw;
+    max-width: 95vw;
+    margin: 0 auto 10px;
+    position: relative;
+    z-index: 2;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#gameCanvas {
+    display: none;
+    border: 2px solid #333;
+    background-color: #fff;
+    position: relative;
+    z-index: 1;
+    margin: 10px auto;
+    max-width: 95vw;
+    height: auto;
+    box-sizing: border-box;
+}
+
+.game-button {
+    padding: 10px;
+    background-color: #4CAF50;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: inline-flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.game-button span {
+    width: 25px;
+    height: 25px;
+    border: 2px solid white;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.game-button .space {
+    width: 15px;
+    border: none;
+}
+
+.game-button:hover {
+    background-color: #45a049;
+}
+
+.message-display {
+    height: 40px;
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #333;
+    text-align: center;
+}
+
+.letter-guide {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 15px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.guide-box {
+    width: 30px;
+    height: 30px;
+    border: 2px solid #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: #333;
+}
+
+.guide-space {
+    width: 30px;
+    height: 2px;
+    background-color: #666;
+    margin-top: 14px;
+    transition: background-color 0.3s;
+}
+
+.collected {
+    background-color: #4CAF50;
+    color: white;
+    border-color: #4CAF50;
+}
+
+.collected-space {
+    background-color: #4CAF50;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    font-family: 'QuinqueFive', monospace;
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    min-width: 300px;
+}
+
+.modal h2 {
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: #333;
+}
+
+.modal p {
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: #666;
+}
+
+.modal input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 2px solid #4CAF50;
+    border-radius: 5px;
+    font-family: 'QuinqueFive', monospace;
+    font-size: 14px;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.modal-buttons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'QuinqueFive', monospace;
+    font-size: 12px;
+    transition: background-color 0.3s;
+}
+
+#createCustomGame {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#closeModal {
+    background-color: #666;
+    color: white;
+}
+
+.modal-buttons button:hover {
+    opacity: 0.9;
+}
+
+.button-container {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 10px 0;
+    flex-wrap: wrap;
+    padding: 0 10px;
+    width: 100%;
+    max-width: 95vw;
+    position: relative;
+    z-index: 1001;
+}
+
+#buildCustomMessage::placeholder {
+    font-size: 10px;
+}
+
+#buildCustomMessage {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 2px solid #4CAF50;
+    border-radius: 5px;
+    font-family: 'QuinqueFive', monospace;
+    font-size: 14px;
+}
+
+.mobile-controls {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    grid-template-rows: repeat(3, auto);
+    gap: 5px;
+    z-index: 1000;
+    margin: 10px 0;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+    width: fit-content;
+    backdrop-filter: blur(5px);
+    place-items: center;
+}
+
+.middle-row {
+    display: contents;
+}
+
+.up-btn {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
+}
+
+.left-btn {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.right-btn {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+.down-btn {
+    grid-column: 2;
+    grid-row: 3;
+    margin: 0;
+}
+
+.direction-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    background-color: rgba(85, 85, 85, 0.616);
+    color: white;
+    font-size: 24px;
+    font-family: 'QuinqueFive', monospace;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.1s, background-color 0.1s;
+    user-select: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.direction-btn:active {
+    transform: scale(0.9);
+    background-color: rgba(85, 85, 85, 0.616);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+@media screen and (max-width: 768px) {
+    .game-container {
+        justify-content: space-between;
+    }
+    
+    .game-button span {
+        width: 20px;
+        height: 20px;
+        font-size: 12px;
+    }
+    
+    .direction-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 16px;
+    }
+    
+    .controls-guide {
+        font-size: 14px;
+        margin-top: 10px;
+    }
+    
+    .letter-guide {
+        gap: 2px;
+    }
+    
+    .guide-box {
+        width: 20px;
+        height: 20px;
+        font-size: 12px;
+    }
+    
+    .mobile-controls {
+        gap: 8px;
+        padding: 12px;
+    }
+    
+    .game-content {
+        margin-bottom: 5px;
+    }
+    
+    .button-container {
+        margin: 5px 0;
+    }
+    
+    #gameCanvas {
+        margin: 5px auto;
+    }
+}
+
+@media screen and (orientation: landscape) and (max-height: 500px) {
+    .game-container {
+        padding: 5px;
+    }
+    
+    .direction-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+    }
+    
+    .mobile-controls {
+        gap: 4px;
+        padding: 8px;
+    }
+}
+
+@supports (padding: max(0px)) {
+    .game-container {
+        padding-left: max(10px, env(safe-area-inset-left));
+        padding-right: max(10px, env(safe-area-inset-right));
+        padding-bottom: max(20px, env(safe-area-inset-bottom));
+    }
+} 
+
+.mobile-controls-guide {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    grid-template-rows: repeat(3, auto);
+    gap: 5px;
+    margin-top: 20px;
+    place-items: center;
+    width: fit-content;
+    margin: 20px auto;
+}
+
+.guide-middle-row {
+    display: contents;
+}
+
+.guide-up-btn {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.guide-left-btn {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.guide-right-btn {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+.guide-down-btn {
+    grid-column: 2;
+    grid-row: 3;
+}
+
+.controls-guide {
+    color: #1a1a1a;
+    font-size: 1.2em;
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* 隐藏原来的WASD键盘显示 */
+.keys-display {
+    display: none;
+} 
