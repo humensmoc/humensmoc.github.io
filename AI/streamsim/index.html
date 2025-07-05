@@ -1,0 +1,193 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>直播模拟器</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>
+            <img src="/images/XiaoWuPoster.png" alt="XiaoWuPoster" class="logo">
+            直播模拟器
+        </h1>
+        
+        <div class="main-content">
+            <div class="recorder-panel">
+                <div class="controls">
+                    <button id="startBtn" class="btn">开始直播</button>
+                    <!-- <button id="stopBtn" class="btn" disabled>停止直播</button> -->
+                    <button id="streamVideoBtn" class="btn">播放视频...</button>
+                    <!-- <button id="downloadBtn" class="btn" disabled>下载</button> -->
+                </div>
+                
+                <div class="status">
+                    <div id="recordingStatus">准备直播</div>
+                    <div id="timer">00:00</div>
+                </div>
+                
+                <div class="viewer-count">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/>
+                    </svg>
+                    <span id="viewerCount">0</span> 观众
+                </div>
+                
+                <div class="preview-container">
+                    <video id="preview" autoplay muted></video>
+                    <div id="previewViewerCount" class="preview-viewer-count">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/>
+                        </svg>
+                        <span id="viewerCount">0</span>
+                    </div>
+                </div>
+                <div class="instructions">
+                    <h2>使用方法</h2>
+                    <ol>
+                        <li>点击"开始直播"开始共享屏幕直播。</li>
+                        <li>选择要共享的窗口或屏幕。（第一次可能需要等待10-20秒才会开始出现弹幕）</li>
+                        <li>使用"播放视频..."加载视频文件并为其生成弹幕。</li>
+                        <li>点击右上角的"悬浮窗模式"可以开启悬浮窗，只显示弹幕内容。</li>
+                    </ol>
+                </div>
+                
+                <div class="stream-settings-container">
+                    <h3>直播设置</h3>
+                    <div class="setting-row">
+                        <span class="setting-label">AI检查间隔:</span>
+                        <select id="aiIntervalSelect">
+                            <option value="1">1秒</option>
+                            <option value="1.5">1.5秒</option>
+                            <option value="2">2秒</option>
+                            <option value="2.5">2.5秒</option>
+                            <option value="3">3秒</option>
+                            <option value="3.5" selected>3.5秒</option>
+                            <option value="5">5秒</option>
+                            <option value="7.5">7.5秒</option>
+                            <option value="10">10秒</option>
+                        </select>
+                    </div>
+                    <div class="setting-row">
+                        <span class="setting-label">静音AI聊天</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="mutedChat">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-row">
+                        <span class="setting-label">禁用打赏</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="disableDonations">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="chat-settings">
+                    <h3>聊天风格</h3>
+                    <div class="checkbox-container">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="angryViewers">
+                            <label for="angryViewers">愤怒观众</label>
+                        </div>
+                        
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="memeViewers">
+                            <label for="memeViewers">梗图观众</label>
+                        </div>
+                        
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="happyViewers">
+                            <label for="happyViewers">快乐观众</label>
+                        </div>
+                        
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="botViewers">
+                            <label for="botViewers">机器人观众</label>
+                        </div>
+                        
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="sillyViewers">
+                            <label for="sillyViewers">搞笑观众</label>
+                        </div>
+                        
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="sadViewers">
+                            <label for="sadViewers">悲伤观众</label>
+                        </div>
+                        
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="confusedViewers">
+                            <label for="confusedViewers">困惑观众</label>
+                        </div>
+                        
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="fanViewers">
+                            <label for="fanViewers">粉丝观众</label>
+                        </div>
+                    </div>
+                    <div class="settings-note">这些设置影响AI生成的聊天内容</div>
+                </div>
+                
+                <div class="poll-container">
+                    <h3>
+                        直播投票
+                        <button id="createPollBtn">创建投票</button>
+                    </h3>
+                    
+                    <div id="pollFormContainer" style="display: none;">
+                        <form id="pollForm">
+                            <input type="text" name="pollTitle" placeholder="投票问题" required>
+                            <div id="pollOptions">
+                                <div class="option-container">
+                                    <input type="text" name="option1" placeholder="选项1" required>
+                                </div>
+                                <div class="option-container">
+                                    <input type="text" name="option2" placeholder="选项2" required>
+                                </div>
+                            </div>
+                            <button type="button" id="addOptionBtn" class="add-option-btn">+ 添加选项</button>
+                            <div class="option-container">
+                                <input type="number" name="duration" placeholder="持续时间（秒）" value="60" min="10" max="300" required>
+                            </div>
+                            <button type="submit" class="create-poll-btn">开始投票</button>
+                        </form>
+                    </div>
+                    
+                    <div id="activePollContainer"></div>
+                </div>
+            </div>
+            
+            
+        </div>
+        
+        <div class="chat-panel">
+            <div class="chat-header">
+                <div class="chat-header-content">
+                    <h2>直播聊天</h2>
+                </div>
+                <button id="popoutBtn" class="popout-btn">
+                    悬浮窗模式
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M10 3v2H5v14h14v-5h2v7H3V3h7zm11 0v8h-2V6.413l-7.293 7.294-1.414-1.414L17.587 5H13V3h8z" />
+                    </svg>
+                </button>
+            </div>
+            <div class="chat-messages" id="chatMessages"></div>
+            <div class="chat-input-container">
+                <input type="text" id="chatInput" placeholder="发送消息...">
+                <button id="sendBtn">聊天</button>
+            </div>
+            <div class="chat-info">
+                <h3>提示:</h3>
+                直播时，AI会根据您的屏幕内容生成聊天消息。
+            </div>
+        </div>
+    </div>
+    
+    <script src="AIController.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

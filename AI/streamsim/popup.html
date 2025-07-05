@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>直播聊天</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="popup-chat">
+        <div class="chat-header">
+            <div class="chat-header-content">
+                <h2>直播聊天</h2>
+                <div class="chat-header-viewers">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/>
+                    </svg>
+                    <span id="popupViewerCount">0</span>
+                </div>
+            </div>
+        </div>
+        <div class="chat-content">
+            <div id="popupPollContainer"></div>
+            <div class="chat-messages" id="popupChatMessages"></div>
+        </div>
+        <div class="chat-input-container">
+            <input type="text" id="popupChatInput" placeholder="发送消息...">
+            <button id="popupSendBtn">聊天</button>
+        </div>
+    </div>
+    <script src="AIController.js"></script>
+    <script src="popup.js"></script>
+</body>
+</html>
