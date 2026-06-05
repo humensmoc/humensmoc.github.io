@@ -1,9 +1,8 @@
 class AIController {
     constructor() {
         this.apiUrl = 'https://ark.cn-beijing.volces.com/api/v3/chat/completions';
-        this.apiKey = '8cd1d8a4-9a9e-4237-90e7-8fd75ea0fdbd';
-        // this.model = 'doubao-seed-1-6-flash-250615';
-        this.model = 'doubao-seed-1-6-250615';
+        this.apiKey = 'ark-e3845a2c-7c39-45b0-840b-9c1277535617-8abbd';
+        this.model = 'doubao-seed-1-8-251228';
         this.isProcessing = false;
         this.lastScreenshot = null;
         this.pendingScreenshot = null;
