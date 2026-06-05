@@ -437,22 +437,15 @@ async function generateAIResponseToUserMessage(userMessage, username) {
 }
 
 let chatPopupWindow = null;
+let popupMessageListenerAdded = false;
 
-function openChatPopup() {
-    // Close any existing popup
-    if (chatPopupWindow && !chatPopupWindow.closed) {
-        chatPopupWindow.close();
-    }
-    
-    // Create a new popup window
-    chatPopupWindow = window.open('popup.html', 'StreamChat', 'width=350,height=600,resizable=yes');
-    
-    // Set up communication between windows
+function initPopupMessageListener() {
+    if (popupMessageListenerAdded) return;
+    popupMessageListenerAdded = true;
     window.addEventListener('message', function(event) {
         if (event.data.type === 'newUserMessage') {
             addMessageToChat('You', event.data.message, 'color-4');
         } else if (event.data.type === 'requestPollUpdate' && activePoll) {
-            // Send current poll data when popup requests an update
             event.source.postMessage({
                 type: activePoll ? 'pollUpdate' : 'pollRemoved',
                 poll: activePoll ? JSON.parse(JSON.stringify(activePoll)) : null,
@@ -460,30 +453,97 @@ function openChatPopup() {
             }, '*');
         }
     });
-    
-    // If there's an active poll, send it to the popup
-    chatPopupWindow.addEventListener('load', function() {
-        // Send viewer count to popup
-        chatPopupWindow.postMessage({
-            type: 'viewerCountUpdate',
-            count: Math.floor(uniqueUsernames.size * 1.5)
+}
+
+function sendPopupInitialData(popupWin) {
+    popupWin.postMessage({
+        type: 'viewerCountUpdate',
+        count: Math.floor(uniqueUsernames.size * 1.5)
+    }, '*');
+
+    if (activePoll) {
+        popupWin.postMessage({
+            type: 'newPoll',
+            poll: JSON.parse(JSON.stringify(activePoll))
         }, '*');
-        
-        if (activePoll) {
-            chatPopupWindow.postMessage({
-                type: 'newPoll',
-                poll: JSON.parse(JSON.stringify(activePoll))
-            }, '*');
-            
-            chatPopupWindow.postMessage({
-                type: 'pollUpdate',
-                poll: JSON.parse(JSON.stringify(activePoll)),
-                totalVotes: totalVotes
-            }, '*');
+        popupWin.postMessage({
+            type: 'pollUpdate',
+            poll: JSON.parse(JSON.stringify(activePoll)),
+            totalVotes: totalVotes
+        }, '*');
+    }
+}
+
+async function loadPopupIntoWindow(targetWindow) {
+    const response = await fetch('popup.html');
+    const html = await response.text();
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+
+    targetWindow.document.title = doc.title;
+    targetWindow.document.head.innerHTML = '';
+    doc.head.querySelectorAll('link, meta, style').forEach(node => {
+        targetWindow.document.head.appendChild(node.cloneNode(true));
+    });
+    targetWindow.document.body.innerHTML = doc.body.innerHTML;
+
+    const scripts = doc.body.querySelectorAll('script');
+    for (const script of scripts) {
+        await new Promise((resolve, reject) => {
+            const newScript = targetWindow.document.createElement('script');
+            if (script.src) {
+                newScript.src = script.src;
+                newScript.onload = resolve;
+                newScript.onerror = reject;
+            } else {
+                newScript.textContent = script.textContent;
+                resolve();
+            }
+            targetWindow.document.body.appendChild(newScript);
+        });
+    }
+}
+
+function closeChatPopup() {
+    if (chatPopupWindow && !chatPopupWindow.closed) {
+        chatPopupWindow.close();
+    }
+    chatPopupWindow = null;
+}
+
+async function openChatPiP() {
+    const pipWindow = await documentPictureInPicture.requestWindow({
+        width: 350,
+        height: 600
+    });
+    chatPopupWindow = pipWindow;
+    pipWindow.addEventListener('pagehide', () => {
+        if (chatPopupWindow === pipWindow) {
+            chatPopupWindow = null;
         }
     });
-    
-    // If there's an active poll, send it to the popup
+    await loadPopupIntoWindow(pipWindow);
+    sendPopupInitialData(pipWindow);
+}
+
+async function openChatPopup() {
+    initPopupMessageListener();
+    closeChatPopup();
+
+    if (window.documentPictureInPicture) {
+        try {
+            await openChatPiP();
+            return;
+        } catch (err) {
+            console.warn('画中画置顶失败，退回普通悬浮窗', err);
+        }
+    }
+
+    chatPopupWindow = window.open('popup.html', 'StreamChat', 'width=350,height=600,resizable=yes');
+    if (!chatPopupWindow) {
+        alert('无法打开聊天窗口，请允许浏览器弹窗');
+        return;
+    }
+    chatPopupWindow.addEventListener('load', () => sendPopupInitialData(chatPopupWindow));
 }
 
 // Poll functions
