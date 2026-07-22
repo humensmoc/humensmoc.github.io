@@ -1,0 +1,9 @@
+{
+  "name": "humensmoc-github-io",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "editor": "node _tools/article-manager/server.js",
+    "test": "node --test _tests/*.test.js"
+  }
+}

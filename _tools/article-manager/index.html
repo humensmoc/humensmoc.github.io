@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>设计文章库 · 本地管理</title>
+  <link rel="stylesheet" href="/manager.css">
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">LOCAL EDITOR</p>
+      <h1>设计文章库</h1>
+      <p class="subtitle">整理链接、推荐理由与分类，确认后再发布。</p>
+    </div>
+    <div class="header-actions">
+      <span id="dirty-indicator" class="dirty-indicator" hidden>有未保存修改</span>
+    </div>
+  </header>
+
+  <section class="status-bar" aria-label="数据状态">
+    <span>全部 <strong id="total-count">—</strong></span>
+    <span>草稿 <strong id="draft-count">—</strong></span>
+    <span>已发布 <strong id="published-count">—</strong></span>
+    <span>最后保存 <strong id="updated-at">—</strong></span>
+  </section>
+
+  <p id="status-message" class="message" role="status" aria-live="polite"></p>
+  <p id="error-message" class="message error" role="alert" hidden></p>
+
+  <main class="workspace">
+    <aside class="article-browser" aria-label="文章列表">
+      <div class="browser-heading">
+        <h2>文章</h2>
+        <button id="new-article" class="button primary" type="button">新建文章</button>
+      </div>
+      <div class="filters">
+        <label>
+          搜索标题
+          <input id="article-search" type="search" placeholder="输入关键词">
+        </label>
+        <div class="filter-row">
+          <label>
+            状态
+            <select id="status-filter">
+              <option value="all">全部</option>
+              <option value="draft">草稿</option>
+              <option value="published">已发布</option>
+            </select>
+          </label>
+          <label>
+            主分类
+            <select id="category-filter"><option value="all">全部</option></select>
+          </label>
+        </div>
+        <label>
+          Tag
+          <select id="tag-filter"><option value="all">全部</option></select>
+        </label>
+      </div>
+      <p id="article-result-count" class="result-count"></p>
+      <div id="article-list" class="article-list"></div>
+    </aside>
+
+    <section class="editor-panel" aria-labelledby="editor-title">
+      <div class="editor-heading">
+        <div>
+          <p id="editor-state" class="eyebrow">NEW DRAFT</p>
+          <h2 id="editor-title">新建文章</h2>
+        </div>
+        <span id="article-status" class="status-chip draft">草稿</span>
+      </div>
+
+      <form id="article-form">
+        <label>
+          原文链接 <span aria-hidden="true">*</span>
+          <input name="url" type="url" required placeholder="https://example.com/article">
+        </label>
+        <label>
+          标题 <span aria-hidden="true">*</span>
+          <input name="title" required maxlength="180" placeholder="手动填写文章标题">
+        </label>
+        <label>
+          推荐理由 <span aria-hidden="true">*</span>
+          <textarea name="recommendation" required rows="8" placeholder="为什么保留并推荐这篇文章？它适合谁、能解决什么问题？"></textarea>
+        </label>
+        <div class="field-control">
+          <div class="field-label-row">
+            <label for="article-category">主分类 <span aria-hidden="true">*</span></label>
+            <button id="manage-categories" class="inline-manage-button" type="button">管理分类</button>
+          </div>
+          <select id="article-category" name="categoryId" required></select>
+        </div>
+
+        <fieldset class="tag-picker">
+          <legend>Tag</legend>
+          <button id="manage-tags" class="inline-manage-button" type="button">管理 Tag</button>
+          <label class="tag-search-label">
+            <span class="visually-hidden">搜索 Tag</span>
+            <input id="tag-search" type="search" placeholder="搜索 Tag">
+          </label>
+          <div id="article-tag-options" class="tag-options"></div>
+        </fieldset>
+
+        <div class="form-actions">
+          <button class="button primary" type="submit">保存</button>
+          <button id="publish-toggle" class="button publish" type="button">发布</button>
+          <button id="delete-article" class="button danger" type="button" disabled>删除文章</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <dialog id="category-dialog">
+    <div class="dialog-heading">
+      <div><p class="eyebrow">TAXONOMY</p><h2>管理主分类</h2></div>
+      <button class="icon-button" type="button" data-close-dialog aria-label="关闭">×</button>
+    </div>
+    <form id="add-category-form" class="inline-add-form">
+      <label>新分类名称 <input name="name" required></label>
+      <button class="button primary" type="submit">添加</button>
+    </form>
+    <div id="category-list" class="management-list"></div>
+  </dialog>
+
+  <dialog id="tag-dialog">
+    <div class="dialog-heading">
+      <div><p class="eyebrow">TAXONOMY</p><h2>管理 Tag</h2></div>
+      <button class="icon-button" type="button" data-close-dialog aria-label="关闭">×</button>
+    </div>
+    <form id="add-tag-form" class="inline-add-form">
+      <label>新 Tag 名称 <input name="name" required></label>
+      <button class="button primary" type="submit">添加</button>
+    </form>
+    <div id="tag-list" class="management-list"></div>
+  </dialog>
+
+  <script type="module" src="/manager.js"></script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+{
+  "meta": {
+    "schemaVersion": 1,
+    "updatedAt": "2026-07-21T23:38:56.915Z"
+  },
+  "categories": [
+    {
+      "id": "game-design",
+      "name": "游戏设计"
+    },
+    {
+      "id": "interaction-design",
+      "name": "交互设计"
+    },
+    {
+      "id": "visual-design",
+      "name": "视觉设计"
+    },
+    {
+      "id": "ae7f5ddb-a89c-4ed5-8035-e354150ff7a5",
+      "name": "游戏营销"
+    }
+  ],
+  "tags": [],
+  "articles": [
+    {
+      "id": "9ee51e7b-767b-44bb-bfd4-5f1cb6b67350",
+      "url": "https://howtomarketagame.com/blog/",
+      "title": "Chris的游戏营销博客主页",
+      "recommendation": "可观测宇宙中最好的游戏营销blog",
+      "categoryId": "ae7f5ddb-a89c-4ed5-8035-e354150ff7a5",
+      "tagIds": [],
+      "status": "published",
+      "createdAt": "2026-07-21T23:38:25.685Z",
+      "updatedAt": "2026-07-21T23:38:56.915Z",
+      "publishedAt": "2026-07-21T23:38:56.915Z"
+    }
+  ]
+}

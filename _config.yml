@@ -1,0 +1,6 @@
+exclude:
+  - _tools
+  - _tests
+  - docs
+  - node_modules
+  - package.json

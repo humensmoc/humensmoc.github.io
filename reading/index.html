@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="经过筛选与整理的设计文章，以及它们值得阅读的理由。">
+  <title>设计文章库 - humensmoc</title>
+  <link rel="icon" href="/images/favicon/favicon.ico">
+  <link rel="stylesheet" href="/reading/reading.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="返回 humensmoc 首页">
+      <span class="brand-mark" aria-hidden="true">h</span>
+      <span>humensmoc</span>
+    </a>
+    <a class="home-link" href="/">返回首页 <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="page-title">
+      <p class="kicker">CURATED DESIGN READING</p>
+      <h1 id="page-title">设计文章库</h1>
+      <p class="hero-copy">是一些文章。</p>
+      <p class="library-count"><strong id="published-total">—</strong> 篇已整理文章</p>
+    </section>
+
+    <section class="explorer" aria-label="文章搜索和筛选">
+      <div class="search-row">
+        <label class="search-box">
+          <span class="visually-hidden">搜索文章</span>
+          <span class="search-icon" aria-hidden="true">⌕</span>
+          <input id="article-search" type="search" placeholder="搜索标题、推荐理由、分类或 Tag" disabled>
+        </label>
+        <button id="clear-filters" class="clear-button" type="button" disabled>清除筛选</button>
+      </div>
+
+      <div class="filter-group">
+        <p class="filter-label">主分类</p>
+        <div id="category-filters" class="filter-options" role="group" aria-label="按主分类筛选"></div>
+      </div>
+
+      <details class="tag-filter">
+        <summary>
+          <span>Tag</span>
+          <span id="selected-tag-summary" class="selection-summary">全部</span>
+        </summary>
+        <div id="tag-filters" class="filter-options tag-options" role="group" aria-label="按 Tag 筛选"></div>
+      </details>
+    </section>
+
+    <section class="results" aria-labelledby="result-heading">
+      <div class="results-heading">
+        <h2 id="result-heading">筛选结果</h2>
+        <p id="result-summary" aria-live="polite">正在加载……</p>
+      </div>
+
+      <div id="article-list" class="article-grid"></div>
+
+      <div id="empty-state" class="state-panel" hidden>
+        <p class="state-symbol" aria-hidden="true">∅</p>
+        <h3>没有找到匹配的文章</h3>
+        <p>可以换一个关键词，或者清除部分分类与 Tag。</p>
+        <button id="empty-clear" class="primary-button" type="button">清除筛选</button>
+      </div>
+
+      <div id="error-state" class="state-panel error" role="alert" hidden>
+        <p class="state-symbol" aria-hidden="true">!</p>
+        <h3>文章库暂时无法加载</h3>
+        <p id="error-detail">请稍后刷新页面重试。</p>
+        <button id="retry-load" class="primary-button" type="button">重新加载</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>由 humensmoc 持续整理 · 链接指向原作者网站</p>
+  </footer>
+
+  <script type="module" src="/reading/reading.js"></script>
+</body>
+</html>
