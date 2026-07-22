@@ -25,16 +25,19 @@ test('homepage links to the public design article library', async () => {
   assert.match(home, /href="\/reading\/"/);
 });
 
-test('async form handlers capture their form before awaiting', async () => {
-  const source = await readFile(new URL('../_tools/article-manager/manager.js', import.meta.url), 'utf8');
-  assert.doesNotMatch(source, /event\.currentTarget\.reset\(\)/);
-  assert.equal((source.match(/const form = event\.currentTarget;/g) ?? []).length, 2);
-});
-
-test('category and Tag management controls live beside article fields', async () => {
+test('category and Tag use matching inline management dropdowns', async () => {
   const html = await readFile(new URL('../_tools/article-manager/index.html', import.meta.url), 'utf8');
   const articleForm = html.match(/<form id="article-form">([\s\S]*?)<\/form>/)?.[1] ?? '';
 
-  assert.match(articleForm, /id="manage-categories"/);
-  assert.match(articleForm, /id="manage-tags"/);
+  assert.match(articleForm, /id="category-picker" class="taxonomy-picker"/);
+  assert.match(articleForm, /id="tag-picker" class="taxonomy-picker"/);
+  assert.equal((articleForm.match(/class="taxonomy-dropdown"/g) ?? []).length, 2);
+  assert.equal((articleForm.match(/class="taxonomy-add-form"/g) ?? []).length, 2);
+  assert.equal((articleForm.match(/class="taxonomy-editor"/g) ?? []).length, 2);
+  assert.doesNotMatch(articleForm, /class="taxonomy-add-form"[\s\S]*?<input[^>]+required/);
+  assert.doesNotMatch(html, /<dialog/);
+
+  const controller = await readFile(new URL('../_tools/article-manager/manager.js', import.meta.url), 'utf8');
+  assert.match(controller, /addEventListener\('contextmenu'/);
+  assert.match(controller, /!query\s*\|\|\s*name\.toLocaleLowerCase\(\)\.includes\(query\)/);
 });

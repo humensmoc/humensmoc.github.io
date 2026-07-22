@@ -1,7 +1,7 @@
 {
   "meta": {
     "schemaVersion": 1,
-    "updatedAt": "2026-07-21T23:38:56.915Z"
+    "updatedAt": "2026-07-22T05:58:41.355Z"
   },
   "categories": [
     {
@@ -21,19 +21,43 @@
       "name": "游戏营销"
     }
   ],
-  "tags": [],
+  "tags": [
+    {
+      "id": "be73904a-1c69-4745-b9b0-61a17980ef2d",
+      "name": "blog"
+    },
+    {
+      "id": "8840d9ee-e831-4c00-aeee-3f6f3bc5275c",
+      "name": "steam"
+    }
+  ],
   "articles": [
     {
       "id": "9ee51e7b-767b-44bb-bfd4-5f1cb6b67350",
       "url": "https://howtomarketagame.com/blog/",
       "title": "Chris的游戏营销博客主页",
-      "recommendation": "可观测宇宙中最好的游戏营销blog",
+      "recommendation": "可观测宇宙中最好的独立游戏营销分析",
       "categoryId": "ae7f5ddb-a89c-4ed5-8035-e354150ff7a5",
-      "tagIds": [],
+      "tagIds": [
+        "be73904a-1c69-4745-b9b0-61a17980ef2d",
+        "8840d9ee-e831-4c00-aeee-3f6f3bc5275c"
+      ],
       "status": "published",
       "createdAt": "2026-07-21T23:38:25.685Z",
-      "updatedAt": "2026-07-21T23:38:56.915Z",
+      "updatedAt": "2026-07-22T05:58:41.355Z",
       "publishedAt": "2026-07-21T23:38:56.915Z"
+    },
+    {
+      "id": "cc70d319-a986-460e-bce8-c943f4e717c3",
+      "url": "https://iwataasks.nintendo.com/",
+      "title": "Iwata Asks（岩田聪对任天堂第一方游戏设计团队的采访汇总）",
+      "recommendation": "采访内容较为轻松，不会过于严肃和深入，更多像是同事间讨论开发过程中的趣闻。\n采访的范围覆盖了Wii U、Nintendo 3DS、Wii、Nintendo DS四代主机上的重要游戏项目，比如这四代主机上的马里奥、塞尔达、宝可梦、火焰纹章、动森等系列。",
+      "categoryId": "game-design",
+      "tagIds": [],
+      "status": "published",
+      "createdAt": "2026-07-22T04:08:23.352Z",
+      "updatedAt": "2026-07-22T04:12:05.823Z",
+      "publishedAt": "2026-07-22T04:09:33.728Z"
     }
   ]
 }

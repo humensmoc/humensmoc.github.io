@@ -85,22 +85,49 @@
           <textarea name="recommendation" required rows="8" placeholder="为什么保留并推荐这篇文章？它适合谁、能解决什么问题？"></textarea>
         </label>
         <div class="field-control">
-          <div class="field-label-row">
-            <label for="article-category">主分类 <span aria-hidden="true">*</span></label>
-            <button id="manage-categories" class="inline-manage-button" type="button">管理分类</button>
+          <label id="category-picker-label">主分类 <span aria-hidden="true">*</span></label>
+          <div id="category-picker" class="taxonomy-picker" data-kind="category">
+            <button class="taxonomy-trigger" type="button" aria-expanded="false" aria-controls="category-dropdown" aria-labelledby="category-picker-label category-summary">
+              <span id="category-summary">请选择主分类</span>
+              <span class="taxonomy-chevron" aria-hidden="true"></span>
+            </button>
+            <div id="category-dropdown" class="taxonomy-dropdown" hidden>
+              <div class="taxonomy-toolbar">
+                <input class="taxonomy-search" type="search" placeholder="搜索分类" aria-label="搜索分类">
+                <div class="taxonomy-add-form">
+                  <input name="name" placeholder="新分类名称" aria-label="新分类名称">
+                  <button class="button primary" type="button">添加</button>
+                </div>
+              </div>
+              <p class="taxonomy-help">左键选择分类，右键可重命名或删除。</p>
+              <div class="taxonomy-list"></div>
+              <div class="taxonomy-editor" hidden></div>
+            </div>
+            <input id="article-category" name="categoryId" type="hidden">
           </div>
-          <select id="article-category" name="categoryId" required></select>
         </div>
 
-        <fieldset class="tag-picker">
-          <legend>Tag</legend>
-          <button id="manage-tags" class="inline-manage-button" type="button">管理 Tag</button>
-          <label class="tag-search-label">
-            <span class="visually-hidden">搜索 Tag</span>
-            <input id="tag-search" type="search" placeholder="搜索 Tag">
-          </label>
-          <div id="article-tag-options" class="tag-options"></div>
-        </fieldset>
+        <div class="field-control">
+          <label id="tag-picker-label">Tag</label>
+          <div id="tag-picker" class="taxonomy-picker" data-kind="tag">
+            <button class="taxonomy-trigger" type="button" aria-expanded="false" aria-controls="tag-dropdown" aria-labelledby="tag-picker-label tag-summary">
+              <span id="tag-summary">未选择 Tag</span>
+              <span class="taxonomy-chevron" aria-hidden="true"></span>
+            </button>
+            <div id="tag-dropdown" class="taxonomy-dropdown" hidden>
+              <div class="taxonomy-toolbar">
+                <input class="taxonomy-search" type="search" placeholder="搜索 Tag" aria-label="搜索 Tag">
+                <div class="taxonomy-add-form">
+                  <input name="name" placeholder="新 Tag 名称" aria-label="新 Tag 名称">
+                  <button class="button primary" type="button">添加</button>
+                </div>
+              </div>
+              <p class="taxonomy-help">左键切换 Tag，右键可重命名或删除。</p>
+              <div class="taxonomy-list"></div>
+              <div class="taxonomy-editor" hidden></div>
+            </div>
+          </div>
+        </div>
 
         <div class="form-actions">
           <button class="button primary" type="submit">保存</button>
@@ -110,30 +137,6 @@
       </form>
     </section>
   </main>
-
-  <dialog id="category-dialog">
-    <div class="dialog-heading">
-      <div><p class="eyebrow">TAXONOMY</p><h2>管理主分类</h2></div>
-      <button class="icon-button" type="button" data-close-dialog aria-label="关闭">×</button>
-    </div>
-    <form id="add-category-form" class="inline-add-form">
-      <label>新分类名称 <input name="name" required></label>
-      <button class="button primary" type="submit">添加</button>
-    </form>
-    <div id="category-list" class="management-list"></div>
-  </dialog>
-
-  <dialog id="tag-dialog">
-    <div class="dialog-heading">
-      <div><p class="eyebrow">TAXONOMY</p><h2>管理 Tag</h2></div>
-      <button class="icon-button" type="button" data-close-dialog aria-label="关闭">×</button>
-    </div>
-    <form id="add-tag-form" class="inline-add-form">
-      <label>新 Tag 名称 <input name="name" required></label>
-      <button class="button primary" type="submit">添加</button>
-    </form>
-    <div id="tag-list" class="management-list"></div>
-  </dialog>
 
   <script type="module" src="/manager.js"></script>
 </body>

@@ -5,7 +5,6 @@ import {
   deleteArticle,
   deleteCategory,
   deleteTag,
-  mergeTags,
   publishArticle,
   renameCategory,
   renameTag,
@@ -41,14 +40,8 @@ const elements = {
   articleStatus: document.querySelector('#article-status'),
   publishToggle: document.querySelector('#publish-toggle'),
   deleteArticle: document.querySelector('#delete-article'),
-  tagSearch: document.querySelector('#tag-search'),
-  articleTagOptions: document.querySelector('#article-tag-options'),
-  categoryDialog: document.querySelector('#category-dialog'),
-  tagDialog: document.querySelector('#tag-dialog'),
-  categoryList: document.querySelector('#category-list'),
-  tagList: document.querySelector('#tag-list'),
-  addCategoryForm: document.querySelector('#add-category-form'),
-  addTagForm: document.querySelector('#add-tag-form'),
+  categoryPicker: document.querySelector('#category-picker'),
+  tagPicker: document.querySelector('#tag-picker'),
 };
 
 let library;
@@ -147,31 +140,175 @@ function renderArticleList() {
   }
 }
 
-function renderTagOptions(selectedIds = []) {
-  const query = elements.tagSearch.value.trim().toLocaleLowerCase();
-  elements.articleTagOptions.replaceChildren();
-  const tags = library.tags.filter(({ id, name }) => selectedIds.includes(id)
-    || name.toLocaleLowerCase().includes(query));
-  if (!tags.length) {
-    const empty = document.createElement('p');
-    empty.className = 'tag-empty';
-    empty.textContent = library.tags.length ? '没有匹配的 Tag。' : '还没有 Tag，请先在 Tag 管理中创建。';
-    elements.articleTagOptions.append(empty);
+function getSelectedTagIds() {
+  return [...elements.tagPicker.querySelectorAll('input[name="tagIds"]:checked')].map(({ value }) => value);
+}
+
+function updateTaxonomySummary(kind) {
+  const picker = kind === 'category' ? elements.categoryPicker : elements.tagPicker;
+  const summary = picker.querySelector(kind === 'category' ? '#category-summary' : '#tag-summary');
+  if (kind === 'category') {
+    const selectedId = elements.articleForm.elements.categoryId.value;
+    summary.textContent = library.categories.find(({ id }) => id === selectedId)?.name ?? '请选择主分类';
     return;
   }
-  for (const tag of tags) {
-    const label = document.createElement('label');
-    label.className = 'tag-option';
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.name = 'tagIds';
-    checkbox.value = tag.id;
-    checkbox.checked = selectedIds.includes(tag.id);
-    const name = document.createElement('span');
-    name.textContent = tag.name;
-    label.append(checkbox, name);
-    elements.articleTagOptions.append(label);
+  const selectedNames = getSelectedTagIds()
+    .map((id) => library.tags.find((tag) => tag.id === id)?.name)
+    .filter(Boolean);
+  summary.textContent = selectedNames.length ? selectedNames.join('、') : '未选择 Tag';
+}
+
+function taxonomyConfig(kind) {
+  return kind === 'category'
+    ? {
+        picker: elements.categoryPicker,
+        records: library.categories,
+        count: countCategoryArticles,
+        label: '分类',
+      }
+    : {
+        picker: elements.tagPicker,
+        records: library.tags,
+        count: countTagArticles,
+        label: 'Tag',
+      };
+}
+
+function renderTaxonomyPicker(kind, selectedIds) {
+  const config = taxonomyConfig(kind);
+  const list = config.picker.querySelector('.taxonomy-list');
+  const editor = config.picker.querySelector('.taxonomy-editor');
+  const query = config.picker.querySelector('.taxonomy-search').value.trim().toLocaleLowerCase();
+  const visibleRecords = config.records.filter(({ name }) => !query
+    || name.toLocaleLowerCase().includes(query));
+  list.replaceChildren();
+  editor.replaceChildren();
+  editor.hidden = true;
+
+  if (!visibleRecords.length) {
+    const empty = document.createElement('p');
+    empty.className = 'tag-empty';
+    const separator = kind === 'tag' ? ' ' : '';
+    empty.textContent = config.records.length
+      ? `没有匹配的${separator}${config.label}。`
+      : `还没有${separator}${config.label}，可在上方直接添加。`;
+    list.append(empty);
+    updateTaxonomySummary(kind);
+    return;
   }
+
+  for (const record of visibleRecords) {
+    const labelSeparator = kind === 'tag' ? ' ' : '';
+    const row = document.createElement('div');
+    row.className = 'taxonomy-chip';
+    row.tabIndex = 0;
+    row.title = `左键选择，右键管理${labelSeparator}${config.label}`;
+
+    const choice = document.createElement('label');
+    choice.className = 'taxonomy-choice';
+    const selection = document.createElement('input');
+    selection.type = kind === 'category' ? 'radio' : 'checkbox';
+    selection.name = kind === 'category' ? 'category-choice' : 'tagIds';
+    selection.value = record.id;
+    selection.checked = selectedIds.includes(record.id);
+    selection.addEventListener('change', () => {
+      if (kind === 'category') elements.articleForm.elements.categoryId.value = record.id;
+      updateTaxonomySummary(kind);
+      setDirty(true);
+    });
+    const selectionText = document.createElement('span');
+    selectionText.textContent = record.name;
+
+    const meta = document.createElement('span');
+    meta.className = 'management-meta';
+    meta.textContent = config.count(library, record.id);
+    meta.setAttribute('aria-label', `${config.count(library, record.id)} 篇文章`);
+    choice.append(selection, selectionText, meta);
+    row.append(choice);
+    const openEditor = (event) => {
+      event.preventDefault();
+      renderTaxonomyEditor(kind, record);
+    };
+    row.addEventListener('contextmenu', openEditor);
+    row.addEventListener('keydown', (event) => {
+      if (event.key === 'ContextMenu' || (event.shiftKey && event.key === 'F10')) openEditor(event);
+    });
+    list.append(row);
+  }
+  updateTaxonomySummary(kind);
+}
+
+function renderTaxonomyEditor(kind, record) {
+  const config = taxonomyConfig(kind);
+  const editor = config.picker.querySelector('.taxonomy-editor');
+  editor.replaceChildren();
+  editor.hidden = false;
+
+  const heading = document.createElement('span');
+  heading.className = 'taxonomy-editor-title';
+  heading.textContent = `编辑${kind === 'tag' ? ' ' : ''}${config.label}“${record.name}”`;
+  const input = document.createElement('input');
+  input.className = 'taxonomy-name-input';
+  input.value = record.name;
+  input.setAttribute('aria-label', `${config.label}名称`);
+  const actions = document.createElement('div');
+  actions.className = 'taxonomy-actions';
+  actions.append(
+    makeManagementButton('保存更改', 'secondary compact', async () => {
+      const selected = kind === 'category'
+        ? [elements.articleForm.elements.categoryId.value]
+        : getSelectedTagIds();
+      const next = kind === 'category'
+        ? renameCategory(library, record.id, input.value, { now: now() })
+        : renameTag(library, record.id, input.value, { now: now() });
+      await persist(next, `${config.label}名称已保存`, { preserveDirty: true });
+      renderTaxonomyPicker(kind, selected);
+    }),
+    makeManagementButton('删除', 'danger compact', async () => {
+      await deleteTaxonomyRecord(kind, record);
+    }),
+  );
+  editor.append(heading, input, actions);
+  input.focus();
+  input.select();
+}
+
+async function deleteTaxonomyRecord(kind, record) {
+  const selectedTags = getSelectedTagIds();
+  if (kind === 'category') {
+    const count = countCategoryArticles(library, record.id);
+    let next;
+    let nextCategoryId = elements.articleForm.elements.categoryId.value;
+    if (count === 0) {
+      if (!window.confirm(`确定删除主分类“${record.name}”吗？`)) return;
+      next = deleteCategory(library, record.id, { now: now() });
+      if (nextCategoryId === record.id) nextCategoryId = next.categories[0]?.id ?? '';
+    } else {
+      const choices = library.categories.filter(({ id }) => id !== record.id).map(({ name }) => name).join('、');
+      const replacementName = window.prompt(`该分类仍被 ${count} 篇文章使用。请输入替代分类名称：\n${choices}`);
+      if (!replacementName) return;
+      const replacement = library.categories.find(({ id, name }) => id !== record.id
+        && name.toLocaleLowerCase() === replacementName.trim().toLocaleLowerCase());
+      if (!replacement) throw new Error('没有找到这个替代分类');
+      if (!window.confirm(`将 ${count} 篇文章迁移到“${replacement.name}”并删除“${record.name}”？`)) return;
+      next = replaceAndDeleteCategory(library, record.id, replacement.id, { now: now() });
+      if (nextCategoryId === record.id) nextCategoryId = replacement.id;
+    }
+    await persist(next, '主分类已删除', { preserveDirty: true });
+    elements.articleForm.elements.categoryId.value = nextCategoryId;
+    renderTaxonomyPicker('category', [nextCategoryId]);
+    return;
+  }
+
+  const count = countTagArticles(library, record.id);
+  if (count === 0) {
+    if (!window.confirm(`确定删除 Tag“${record.name}”吗？`)) return;
+  } else {
+    const typed = window.prompt(`删除后将从 ${count} 篇文章移除此 Tag。请输入“${record.name}”确认：`);
+    if (typed !== record.name) throw new Error('输入的 Tag 名称不一致，已取消删除');
+  }
+  await persist(deleteTag(library, record.id, { now: now() }), 'Tag 已删除', { preserveDirty: true });
+  renderTaxonomyPicker('tag', selectedTags.filter((id) => id !== record.id));
 }
 
 function renderArticleForm() {
@@ -184,18 +321,20 @@ function renderArticleForm() {
   elements.publishToggle.textContent = article?.status === 'published' ? '撤回为草稿' : '发布';
   elements.deleteArticle.disabled = !article;
 
-  const categorySelect = elements.articleForm.elements.categoryId;
-  categorySelect.replaceChildren();
-  for (const category of library.categories) categorySelect.append(option(category.id, category.name));
-
+  const categoryInput = elements.articleForm.elements.categoryId;
   if (article) {
     elements.articleForm.elements.url.value = article.url;
     elements.articleForm.elements.title.value = article.title;
     elements.articleForm.elements.recommendation.value = article.recommendation;
-    categorySelect.value = article.categoryId;
+    categoryInput.value = article.categoryId;
+  } else {
+    categoryInput.value = library.categories[0]?.id ?? '';
   }
-  elements.tagSearch.value = '';
-  renderTagOptions(article?.tagIds ?? []);
+  for (const picker of [elements.categoryPicker, elements.tagPicker]) {
+    picker.querySelector('.taxonomy-search').value = '';
+  }
+  renderTaxonomyPicker('category', [categoryInput.value]);
+  renderTaxonomyPicker('tag', article?.tagIds ?? []);
   setDirty(false);
 }
 
@@ -216,7 +355,8 @@ function articleInput() {
   };
 }
 
-async function persist(nextLibrary, message = '保存成功') {
+async function persist(nextLibrary, message = '保存成功', { preserveDirty = false } = {}) {
+  const wasDirty = dirty;
   const response = await fetch('/api/library', {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
@@ -225,7 +365,7 @@ async function persist(nextLibrary, message = '保存成功') {
   const result = await response.json();
   if (!response.ok) throw new Error(result.error || '保存失败');
   library = result;
-  setDirty(false);
+  setDirty(preserveDirty && wasDirty);
   renderOverview();
   announce(message);
   return result;
@@ -264,108 +404,12 @@ function makeManagementButton(text, className, action) {
   return button;
 }
 
-function renderCategoryManagement() {
-  elements.categoryList.replaceChildren();
-  for (const category of library.categories) {
-    const row = document.createElement('div');
-    row.className = 'management-row';
-    const field = document.createElement('label');
-    field.textContent = `${countCategoryArticles(library, category.id)} 篇文章`;
-    const input = document.createElement('input');
-    input.value = category.name;
-    field.append(input);
-    const actions = document.createElement('div');
-    actions.className = 'management-actions';
-    actions.append(
-      makeManagementButton('保存名称', 'secondary', async () => {
-        await persist(renameCategory(library, category.id, input.value, { now: now() }), '分类名称已保存');
-        renderCategoryManagement();
-        renderArticleForm();
-      }),
-      makeManagementButton('删除', 'danger', async () => {
-        const count = countCategoryArticles(library, category.id);
-        if (count === 0) {
-          if (!window.confirm(`确定删除主分类“${category.name}”吗？`)) return;
-          await persist(deleteCategory(library, category.id, { now: now() }), '主分类已删除');
-        } else {
-          const choices = library.categories.filter(({ id }) => id !== category.id).map(({ name }) => name).join('、');
-          const replacementName = window.prompt(`该分类仍被 ${count} 篇文章使用。请输入替代分类名称：\n${choices}`);
-          if (!replacementName) return;
-          const replacement = library.categories.find(({ id, name }) => id !== category.id
-            && name.toLocaleLowerCase() === replacementName.trim().toLocaleLowerCase());
-          if (!replacement) throw new Error('没有找到这个替代分类');
-          if (!window.confirm(`将 ${count} 篇文章迁移到“${replacement.name}”并删除“${category.name}”？`)) return;
-          await persist(replaceAndDeleteCategory(library, category.id, replacement.id, { now: now() }), '文章已迁移，主分类已删除');
-        }
-        renderCategoryManagement();
-        renderArticleForm();
-      }),
-    );
-    row.append(field, actions);
-    elements.categoryList.append(row);
-  }
+function markArticleContentDirty(event) {
+  if (event.target.matches('[name="url"], [name="title"], [name="recommendation"]')) setDirty(true);
 }
 
-function renderTagManagement() {
-  elements.tagList.replaceChildren();
-  if (!library.tags.length) {
-    const empty = document.createElement('p');
-    empty.className = 'tag-empty';
-    empty.textContent = '还没有 Tag。';
-    elements.tagList.append(empty);
-    return;
-  }
-  for (const tag of library.tags) {
-    const row = document.createElement('div');
-    row.className = 'management-row';
-    const field = document.createElement('label');
-    field.textContent = `${countTagArticles(library, tag.id)} 篇文章`;
-    const input = document.createElement('input');
-    input.value = tag.name;
-    field.append(input);
-    const actions = document.createElement('div');
-    actions.className = 'management-actions';
-    const mergeSelect = document.createElement('select');
-    mergeSelect.className = 'merge-select';
-    mergeSelect.append(option('', '合并到…'));
-    for (const target of library.tags.filter(({ id }) => id !== tag.id)) {
-      mergeSelect.append(option(target.id, target.name));
-    }
-    actions.append(
-      makeManagementButton('保存名称', 'secondary', async () => {
-        await persist(renameTag(library, tag.id, input.value, { now: now() }), 'Tag 名称已保存');
-        renderTagManagement();
-        renderArticleForm();
-      }),
-      mergeSelect,
-      makeManagementButton('合并', 'secondary', async () => {
-        if (!mergeSelect.value) throw new Error('请先选择目标 Tag');
-        const target = library.tags.find(({ id }) => id === mergeSelect.value);
-        if (!window.confirm(`把“${tag.name}”合并到“${target.name}”吗？`)) return;
-        await persist(mergeTags(library, tag.id, target.id, { now: now() }), 'Tag 已合并');
-        renderTagManagement();
-        renderArticleForm();
-      }),
-      makeManagementButton('删除', 'danger', async () => {
-        const count = countTagArticles(library, tag.id);
-        if (count === 0) {
-          if (!window.confirm(`确定删除 Tag“${tag.name}”吗？`)) return;
-        } else {
-          const typed = window.prompt(`删除后将从 ${count} 篇文章移除此 Tag。请输入“${tag.name}”确认：`);
-          if (typed !== tag.name) throw new Error('输入的 Tag 名称不一致，已取消删除');
-        }
-        await persist(deleteTag(library, tag.id, { now: now() }), 'Tag 已删除');
-        renderTagManagement();
-        renderArticleForm();
-      }),
-    );
-    row.append(field, actions);
-    elements.tagList.append(row);
-  }
-}
-
-elements.articleForm.addEventListener('input', () => setDirty(true));
-elements.articleForm.addEventListener('change', () => setDirty(true));
+elements.articleForm.addEventListener('input', markArticleContentDirty);
+elements.articleForm.addEventListener('change', markArticleContentDirty);
 elements.articleForm.addEventListener('submit', handleAction(async (event) => {
   event.preventDefault();
   await saveCurrent();
@@ -402,46 +446,72 @@ for (const filter of [elements.articleSearch, elements.statusFilter, elements.ca
   filter.addEventListener('change', renderArticleList);
 }
 
-elements.tagSearch.addEventListener('input', () => {
-  const selectedIds = new FormData(elements.articleForm).getAll('tagIds');
-  renderTagOptions(selectedIds);
+for (const kind of ['category', 'tag']) {
+  const picker = kind === 'category' ? elements.categoryPicker : elements.tagPicker;
+  const trigger = picker.querySelector('.taxonomy-trigger');
+  const dropdown = picker.querySelector('.taxonomy-dropdown');
+  const search = picker.querySelector('.taxonomy-search');
+  const addForm = picker.querySelector('.taxonomy-add-form');
+
+  trigger.addEventListener('click', () => {
+    const willOpen = dropdown.hidden;
+    for (const otherPicker of [elements.categoryPicker, elements.tagPicker]) {
+      const otherDropdown = otherPicker.querySelector('.taxonomy-dropdown');
+      otherDropdown.hidden = true;
+      otherPicker.querySelector('.taxonomy-trigger').setAttribute('aria-expanded', 'false');
+    }
+    dropdown.hidden = !willOpen;
+    trigger.setAttribute('aria-expanded', String(willOpen));
+    if (willOpen) search.focus();
+  });
+
+  search.addEventListener('input', () => {
+    const selected = kind === 'category'
+      ? [elements.articleForm.elements.categoryId.value]
+      : getSelectedTagIds();
+    renderTaxonomyPicker(kind, selected);
+  });
+
+  const addRecord = handleAction(async () => {
+    const nameInput = addForm.querySelector('[name="name"]');
+    const name = nameInput.value;
+    const id = crypto.randomUUID();
+    const selected = kind === 'category'
+      ? [id]
+      : [...getSelectedTagIds(), id];
+    const next = kind === 'category'
+      ? addCategory(library, name, { id, now: now() })
+      : addTag(library, name, { id, now: now() });
+    await persist(next, `${kind === 'category' ? '主分类' : 'Tag'}已添加`, { preserveDirty: true });
+    nameInput.value = '';
+    search.value = '';
+    if (kind === 'category') elements.articleForm.elements.categoryId.value = id;
+    renderTaxonomyPicker(kind, selected);
+    setDirty(true);
+  });
+  addForm.querySelector('button').addEventListener('click', addRecord);
+  addForm.querySelector('[name="name"]').addEventListener('keydown', (event) => {
+    if (event.key !== 'Enter') return;
+    event.preventDefault();
+    addRecord();
+  });
+}
+
+document.addEventListener('click', (event) => {
+  for (const picker of [elements.categoryPicker, elements.tagPicker]) {
+    if (picker.contains(event.target)) continue;
+    picker.querySelector('.taxonomy-dropdown').hidden = true;
+    picker.querySelector('.taxonomy-trigger').setAttribute('aria-expanded', 'false');
+  }
 });
 
-document.querySelector('#manage-categories').addEventListener('click', () => {
-  if (!confirmDiscard()) return;
-  if (dirty) renderArticleForm();
-  renderCategoryManagement();
-  elements.categoryDialog.showModal();
+document.addEventListener('keydown', (event) => {
+  if (event.key !== 'Escape') return;
+  for (const picker of [elements.categoryPicker, elements.tagPicker]) {
+    picker.querySelector('.taxonomy-dropdown').hidden = true;
+    picker.querySelector('.taxonomy-trigger').setAttribute('aria-expanded', 'false');
+  }
 });
-document.querySelector('#manage-tags').addEventListener('click', () => {
-  if (!confirmDiscard()) return;
-  if (dirty) renderArticleForm();
-  renderTagManagement();
-  elements.tagDialog.showModal();
-});
-document.querySelectorAll('[data-close-dialog]').forEach((button) => {
-  button.addEventListener('click', () => button.closest('dialog').close());
-});
-
-elements.addCategoryForm.addEventListener('submit', handleAction(async (event) => {
-  event.preventDefault();
-  const form = event.currentTarget;
-  const name = new FormData(form).get('name');
-  await persist(addCategory(library, name, { id: crypto.randomUUID(), now: now() }), '主分类已添加');
-  form.reset();
-  renderCategoryManagement();
-  renderArticleForm();
-}));
-
-elements.addTagForm.addEventListener('submit', handleAction(async (event) => {
-  event.preventDefault();
-  const form = event.currentTarget;
-  const name = new FormData(form).get('name');
-  await persist(addTag(library, name, { id: crypto.randomUUID(), now: now() }), 'Tag 已添加');
-  form.reset();
-  renderTagManagement();
-  renderArticleForm();
-}));
 
 window.addEventListener('beforeunload', (event) => {
   if (!dirty) return;
