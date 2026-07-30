@@ -1,0 +1,344 @@
+:root {
+  color-scheme: light;
+  --bg: #f4efe6;
+  --panel: rgba(255, 253, 249, 0.96);
+  --panel-strong: #fffdf9;
+  --panel-border: rgba(71, 51, 25, 0.12);
+  --text: #1f1b16;
+  --muted: rgba(31, 27, 22, 0.68);
+  --accent: #3273dc;
+  --shadow: 0 24px 60px rgba(77, 52, 18, 0.12);
+  --note-width: min(625px, calc(100vw - 76px));
+  --collapsed-width: 56px;
+  --header-height: 72px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.72), transparent 40%),
+    radial-gradient(circle at 85% 10%, rgba(155, 203, 255, 0.18), transparent 30%),
+    linear-gradient(180deg, #f9f4ea 0%, #f4efe6 56%, #eee6d8 100%);
+  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  overflow: hidden;
+}
+
+a {
+  color: inherit;
+}
+
+.app-shell {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: var(--header-height) 1fr;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 20px 28px 18px;
+  border-bottom: 1px solid rgba(58, 39, 18, 0.12);
+  background: rgba(255, 252, 246, 0.84);
+  backdrop-filter: blur(10px);
+}
+
+.site-header h1 {
+  margin: 0;
+  font: 600 18px/1.1 "Inter", "Avenir Next", system-ui, sans-serif;
+  letter-spacing: 0.01em;
+}
+
+.site-kicker,
+.site-caption {
+  margin: 0;
+  color: var(--muted);
+  font: 500 12px/1.4 "Inter", "Avenir Next", system-ui, sans-serif;
+}
+
+.workspace {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.note-scroller {
+  height: 100%;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable both-edges;
+  overscroll-behavior: contain;
+  padding-right: 24px;
+}
+
+.note-scroller::before,
+.note-scroller::after {
+  content: "";
+  flex: 0 0 24px;
+}
+
+.note-pane {
+  position: relative;
+  flex: 0 0 auto;
+  width: var(--note-width);
+  min-width: var(--note-width);
+  height: 100%;
+  background: var(--panel);
+  border-right: 1px solid var(--panel-border);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  overflow-x: hidden;
+  overflow-y: auto;
+  transition:
+    width 180ms ease,
+    min-width 180ms ease,
+    background-color 180ms ease,
+    filter 180ms ease;
+}
+
+.note-pane:first-child {
+  border-left: 1px solid var(--panel-border);
+}
+
+.note-pane.is-active {
+  background: var(--panel-strong);
+}
+
+.note-pane.is-collapsed {
+  width: var(--collapsed-width);
+  min-width: var(--collapsed-width);
+  overflow: hidden;
+  background: linear-gradient(180deg, #fffdf9 0%, #f0e8da 100%);
+}
+
+.note-card {
+  min-height: 100%;
+  padding: 28px 24px 28px 26px;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  gap: 16px;
+}
+
+.note-pane.is-collapsed .note-card {
+  padding: 16px 10px 16px 8px;
+  grid-template-rows: 1fr;
+  align-items: center;
+  justify-items: center;
+}
+
+.note-title {
+  margin: 0;
+  font: 700 27px/1.08 "Inter", "Avenir Next", system-ui, sans-serif;
+  letter-spacing: -0.03em;
+}
+
+.note-pane.is-collapsed .note-title {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  font-size: 16px;
+  line-height: 1.1;
+  letter-spacing: 0.08em;
+  max-height: 100%;
+}
+
+.note-subtitle {
+  margin: 0;
+  color: var(--muted);
+  font: 500 14px/1.5 "Inter", "Avenir Next", system-ui, sans-serif;
+}
+
+.note-pane.is-collapsed .note-subtitle,
+.note-pane.is-collapsed .note-body,
+.note-pane.is-collapsed .note-footer,
+.note-pane.is-collapsed .note-meta {
+  display: none;
+}
+
+.note-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-top: -2px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border: 1px solid rgba(50, 115, 220, 0.14);
+  border-radius: 999px;
+  background: rgba(50, 115, 220, 0.08);
+  color: #224da1;
+  font: 600 12px/1 "Inter", "Avenir Next", system-ui, sans-serif;
+}
+
+.note-body {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+  font-size: 18px;
+  line-height: 1.58;
+}
+
+.note-body p,
+.note-body blockquote,
+.note-body ul,
+.note-body ol {
+  margin: 0;
+}
+
+.note-body ul,
+.note-body ol {
+  padding-left: 1.2em;
+}
+
+.note-body li + li {
+  margin-top: 0.5em;
+}
+
+.note-body blockquote {
+  padding: 14px 16px;
+  border-left: 3px solid rgba(50, 115, 220, 0.24);
+  background: rgba(255, 255, 255, 0.55);
+  color: rgba(31, 27, 22, 0.84);
+  border-radius: 0 12px 12px 0;
+}
+
+.note-link {
+  color: var(--accent);
+  text-decoration: none;
+  border-radius: 6px;
+  padding: 0 2px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.note-link:hover,
+.note-link:focus-visible {
+  text-decoration: underline;
+  background: rgba(50, 115, 220, 0.1);
+  outline: none;
+}
+
+.note-footer {
+  display: grid;
+  gap: 14px;
+  padding-top: 4px;
+  border-top: 1px solid rgba(58, 39, 18, 0.1);
+}
+
+.note-section-title {
+  margin: 0;
+  font: 700 15px/1.2 "Inter", "Avenir Next", system-ui, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(31, 27, 22, 0.68);
+}
+
+.backlink-list {
+  display: grid;
+  gap: 10px;
+}
+
+.backlink {
+  display: block;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(58, 39, 18, 0.08);
+  text-decoration: none;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.backlink:hover,
+.backlink:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(77, 52, 18, 0.08);
+  outline: none;
+}
+
+.backlink-title {
+  display: block;
+  font: 700 15px/1.25 "Inter", "Avenir Next", system-ui, sans-serif;
+  margin-bottom: 4px;
+}
+
+.backlink-snippet {
+  display: block;
+  color: var(--muted);
+  font: 500 13px/1.4 "Inter", "Avenir Next", system-ui, sans-serif;
+}
+
+.preview-card {
+  position: fixed;
+  z-index: 30;
+  width: min(340px, calc(100vw - 24px));
+  padding: 14px 15px 13px;
+  border-radius: 18px;
+  border: 1px solid rgba(58, 39, 18, 0.12);
+  background: rgba(255, 253, 249, 0.98);
+  box-shadow: var(--shadow);
+  pointer-events: none;
+  backdrop-filter: blur(10px);
+}
+
+.preview-label {
+  margin: 0 0 8px;
+  color: rgba(31, 27, 22, 0.52);
+  font: 700 11px/1 "Inter", "Avenir Next", system-ui, sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.preview-card h2 {
+  margin: 0 0 8px;
+  font: 700 18px/1.15 "Inter", "Avenir Next", system-ui, sans-serif;
+}
+
+.preview-card p {
+  margin: 0;
+  color: var(--muted);
+  font: 500 13px/1.45 "Inter", "Avenir Next", system-ui, sans-serif;
+}
+
+.preview-hint {
+  margin-top: 10px !important;
+  color: rgba(31, 27, 22, 0.42) !important;
+}
+
+@media (max-width: 860px) {
+  :root {
+    --header-height: 80px;
+    --note-width: min(92vw, 560px);
+  }
+
+  .site-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .note-pane.is-collapsed {
+    width: 44px;
+    min-width: 44px;
+  }
+
+  .note-pane.is-collapsed .note-title {
+    font-size: 14px;
+  }
+}

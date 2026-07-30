@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Evergreen Note Stack</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="site-header">
+        <div>
+          <p class="site-kicker">Web / Example</p>
+          <h1>Evergreen Note Stack</h1>
+        </div>
+        <p class="site-caption">横向堆叠、可滚动、悬浮预览的笔记原型</p>
+      </header>
+
+      <main class="workspace">
+        <div class="note-scroller" id="noteScroller" aria-label="Evergreen note stack"></div>
+      </main>
+    </div>
+
+    <div class="preview-card" id="previewCard" hidden>
+      <p class="preview-label">Preview</p>
+      <h2 id="previewTitle"></h2>
+      <p id="previewExcerpt"></p>
+      <p class="preview-hint">点击即可打开到右侧</p>
+    </div>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
