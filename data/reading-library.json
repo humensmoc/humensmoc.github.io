@@ -1,7 +1,7 @@
 {
   "meta": {
     "schemaVersion": 1,
-    "updatedAt": "2026-07-22T05:58:41.355Z"
+    "updatedAt": "2026-08-28T03:17:07.311Z"
   },
   "categories": [
     {
@@ -19,6 +19,14 @@
     {
       "id": "ae7f5ddb-a89c-4ed5-8035-e354150ff7a5",
       "name": "游戏营销"
+    },
+    {
+      "id": "bd8a9853-0e62-444a-9107-12876155e521",
+      "name": "游戏分析"
+    },
+    {
+      "id": "ea68689a-3fa6-495f-944e-5c3d0f8bbc4e",
+      "name": "访谈"
     }
   ],
   "tags": [
@@ -29,6 +37,30 @@
     {
       "id": "8840d9ee-e831-4c00-aeee-3f6f3bc5275c",
       "name": "steam"
+    },
+    {
+      "id": "f9198e91-d710-4819-bae3-0d20265c70e9",
+      "name": "知乎"
+    },
+    {
+      "id": "139a92d0-2d4c-4954-bb76-23e87310d4d2",
+      "name": "大型游戏"
+    },
+    {
+      "id": "b380a37e-169c-4ce4-8b1c-9b9f635595b0",
+      "name": "3A"
+    },
+    {
+      "id": "c555f9e4-0176-4074-8045-e03cd4a37dc4",
+      "name": "合集"
+    },
+    {
+      "id": "8303fe05-b9d2-4d1a-8549-bdc720fcb9e8",
+      "name": "任天堂"
+    },
+    {
+      "id": "5947f1f7-97c0-450a-ad0a-284164438414",
+      "name": "访谈"
     }
   ],
   "articles": [
@@ -40,11 +72,12 @@
       "categoryId": "ae7f5ddb-a89c-4ed5-8035-e354150ff7a5",
       "tagIds": [
         "be73904a-1c69-4745-b9b0-61a17980ef2d",
-        "8840d9ee-e831-4c00-aeee-3f6f3bc5275c"
+        "8840d9ee-e831-4c00-aeee-3f6f3bc5275c",
+        "c555f9e4-0176-4074-8045-e03cd4a37dc4"
       ],
       "status": "published",
       "createdAt": "2026-07-21T23:38:25.685Z",
-      "updatedAt": "2026-07-22T05:58:41.355Z",
+      "updatedAt": "2026-08-28T03:16:39.623Z",
       "publishedAt": "2026-07-21T23:38:56.915Z"
     },
     {
@@ -52,12 +85,33 @@
       "url": "https://iwataasks.nintendo.com/",
       "title": "Iwata Asks（岩田聪对任天堂第一方游戏设计团队的采访汇总）",
       "recommendation": "采访内容较为轻松，不会过于严肃和深入，更多像是同事间讨论开发过程中的趣闻。\n采访的范围覆盖了Wii U、Nintendo 3DS、Wii、Nintendo DS四代主机上的重要游戏项目，比如这四代主机上的马里奥、塞尔达、宝可梦、火焰纹章、动森等系列。",
-      "categoryId": "game-design",
-      "tagIds": [],
+      "categoryId": "ea68689a-3fa6-495f-944e-5c3d0f8bbc4e",
+      "tagIds": [
+        "c555f9e4-0176-4074-8045-e03cd4a37dc4",
+        "8303fe05-b9d2-4d1a-8549-bdc720fcb9e8",
+        "5947f1f7-97c0-450a-ad0a-284164438414"
+      ],
       "status": "published",
       "createdAt": "2026-07-22T04:08:23.352Z",
-      "updatedAt": "2026-07-22T04:12:05.823Z",
+      "updatedAt": "2026-08-28T03:17:07.311Z",
       "publishedAt": "2026-07-22T04:09:33.728Z"
+    },
+    {
+      "id": "5269ae3d-3d55-4629-a0b7-fd222e931f65",
+      "url": "https://www.zhihu.com/column/necromanov",
+      "title": "Necromanov的游戏设计和游戏评论合集",
+      "recommendation": "合集中包含11年间Necromanov写作的80余篇游戏分析文章，主要覆盖3A游戏和具有创新商业模式或游戏玩法设计的大型游戏",
+      "categoryId": "bd8a9853-0e62-444a-9107-12876155e521",
+      "tagIds": [
+        "f9198e91-d710-4819-bae3-0d20265c70e9",
+        "139a92d0-2d4c-4954-bb76-23e87310d4d2",
+        "b380a37e-169c-4ce4-8b1c-9b9f635595b0",
+        "c555f9e4-0176-4074-8045-e03cd4a37dc4"
+      ],
+      "status": "published",
+      "createdAt": "2026-08-28T03:16:25.600Z",
+      "updatedAt": "2026-08-28T03:16:26.855Z",
+      "publishedAt": "2026-08-28T03:16:26.855Z"
     }
   ]
 }
